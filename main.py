@@ -1,26 +1,18 @@
 import sys
-from stats import *
+
+from PySide6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
+from cli.cli_app import run_cli_app 
+from utils import *
 
 def main():
-    if len(sys.argv) <= 1:
-        print("Usage: python3 main.py <path_to_book>")
-        sys.exit(1)
+    if len(sys.argv) > 1 and sys.argv[1] == "cli":
+        run_cli_app()
     else:
-        path_file = sys.argv[1]
-        text = get_book_text(path_file)
-        num_words = number_of_words(text)
-        my_dict = dict_of_letters(text)
-        character_frequency_sorted = sorted_dict(my_dict)
 
-        print("============ BOOKBOT ============")
-        print(f"Analyzing book found at {path_file}...")
-        print("----------- Word Count ----------")
-        print(f"Found {num_words} total words")
-        print("----------- Character Count ----------")
-        for character, count in character_frequency_sorted :
-            if character.isalpha():
-                print(f"{character}: {count}")
-        print("============= END ===============")
+        app = QApplication([]) # Putting [] because for now I don't see the point of argv
+        window = QPushButton("Hello world")
+        window.show()
+        app.exec()
 
 
 if __name__ == "__main__":
