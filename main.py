@@ -2,6 +2,7 @@ import sys
 
 from PySide6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
 from cli.cli_app import run_cli_app 
+from views.main_window import MainWindow
 from utils import *
 
 def main():
@@ -10,7 +11,7 @@ def main():
     else:
 
         app = QApplication([]) # Putting [] because for now I don't see the point of argv
-        window = QPushButton("Hello world")
+        window = MainWindow()
         window.show()
         app.exec()
 
