@@ -1,2 +1,5 @@
 books
 __pycache__
+.venv
+.vscode
+conftest.py

@@ -3,8 +3,8 @@ import os
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QFont
-from controllers.main_controller import MainController
-from utils.style_manager import StyleManager
+from src.controllers.main_controller import MainController
+from src.utils.style_manager import StyleManager
 
 class MainWindow(QMainWindow):
     file_path = None

@@ -1,9 +1,9 @@
 import sys
 
 from PySide6.QtWidgets import QApplication, QLabel, QPushButton, QVBoxLayout, QWidget
-from cli.cli_app import run_cli_app 
-from views.main_window import MainWindow
-from utils import *
+from src.cli.cli_app import run_cli_app 
+from src.views.main_window import MainWindow
+from src.utils import *
 
 def main():
     if len(sys.argv) > 1 and sys.argv[1] == "cli":

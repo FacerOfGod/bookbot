@@ -1,5 +1,5 @@
 import sys
-from utils.stats import *
+from src.utils.stats import *
 
 
 def run_cli_app():
