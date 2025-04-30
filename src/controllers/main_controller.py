@@ -17,6 +17,7 @@ class MainController:
             file_name = os.path.basename(file_path)
         else:
             file_name = "Error File"
+        self.view.set_file_path(file_path)
         self.view.update_buttonUpload_text(file_name)
         return file_name
     

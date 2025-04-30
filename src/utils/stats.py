@@ -61,7 +61,8 @@ def dict_of_letters(book_text: str) -> dict:
     for letter in book_text:
         number_of_words = my_dict.get(letter, 0)
         number_of_words += 1
-        my_dict.update({letter: number_of_words})
+        if letter.isalpha():        
+            my_dict.update({letter: number_of_words})
     return my_dict
 
 def sorted_dict(my_dict: dict) -> list:
@@ -79,3 +80,30 @@ def sorted_dict(my_dict: dict) -> list:
         [('c', 3), ('a', 2), ('b', 1)]
     """
     return sorted(my_dict.items(), key=lambda item: item[1], reverse=True)
+
+def file_path_to_stats(file_path: str) -> tuple[str, int, dict]:
+    """
+    Process a text file and extract various statistics about its contents.
+    
+    This function reads a text file and analyzes it to provide:
+    - The complete text content
+    - The total number of words
+    - A sorted dictionary of character occurrences
+    
+    Args:
+        file_path (str): The path to the text file to analyze
+        
+    Returns:
+        tuple[str, int, dict]: A tuple containing:
+            - str: The complete text content of the file
+            - int: The total number of words in the file
+            - dict: A sorted dictionary where:
+                - Keys are characters from the text
+                - Values are the number of occurrences of each character
+                - The dictionary is sorted by occurrence count in descending order
+    
+    """
+    book_text = get_book_text(file_path)
+    total_words = number_of_words(book_text)
+    sort_dict = sorted_dict(dict_of_letters(book_text))
+    return book_text, total_words, sort_dict
