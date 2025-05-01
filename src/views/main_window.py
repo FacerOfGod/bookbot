@@ -2,7 +2,7 @@ import os
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
-from PySide6.QtGui import QFont
+from PySide6.QtGui import QFont, QIcon, QPainter, QColor
 from src.controllers.main_controller import MainController
 from src.utils.bar_chart import BarChart
 from src.utils.style_manager import StyleManager
@@ -13,6 +13,7 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.controller = MainController(self)
         self.bar_chart = BarChart()
+        self.file_path = None
 
         self.setWindowTitle("Cool Interface")
         self.setMinimumSize(400, 300)
@@ -21,15 +22,32 @@ class MainWindow(QMainWindow):
         self.setCentralWidget(central_widget)
         layout = QVBoxLayout(central_widget)
 
-        # Bar chart widget
-        self.bar_chart.setMinimumSize(200, 150)
-        self.bar_chart.setStyleSheet(StyleManager.get_empty_box_style())
-
         # Button to upload file that we want chatacter statics
         self.buttonUpload = QPushButton("Upload file here")
         self.buttonUpload.setFont(QFont("Arial", 12, QFont.Bold))
         self.buttonUpload.setStyleSheet(StyleManager.get_upload_button_style())
         self.buttonUpload.clicked.connect(self.controller.upload_document)
+        self.buttonUpload.setSizePolicy(QSizePolicy.Policy.MinimumExpanding, QSizePolicy.Policy.Fixed)
+
+        # Create a custom light red delete icon
+        delete_icon = QIcon.fromTheme("edit-delete")
+        pixmap = delete_icon.pixmap(16, 16)
+        painter = QPainter(pixmap)
+        painter.setCompositionMode(QPainter.CompositionMode_SourceIn)
+        painter.fillRect(pixmap.rect(), QColor("#FFFFFF"))
+        painter.end()
+        custom_icon = QIcon(pixmap)
+
+        # Delete icon button
+        self.buttonDelete = QToolButton(self.buttonUpload)
+        self.buttonDelete.setIcon(custom_icon)
+        self.buttonDelete.setStyleSheet(StyleManager.get_delete_button_style())
+        self.buttonDelete.clicked.connect(self.reset_graph)
+        self.buttonDelete.setVisible(False)
+        self.buttonDelete.setFixedSize(20, 20)
+
+        # Connect resize event to update delete button position
+        self.buttonUpload.installEventFilter(self)
 
         # Button to later confirm the fact that we what to analyse the current file
         self.button = QPushButton("Click Me!")
@@ -41,13 +59,25 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.buttonUpload, alignment=Qt.AlignCenter)
         layout.addWidget(self.button, alignment=Qt.AlignCenter)
 
-    def update_buttonUpload_text(self, new_text):
-        self.buttonUpload.setText(new_text)
-        print(self.file_path)
+    def eventFilter(self, obj, event):
+        if obj == self.buttonUpload and event.type() == event.Type.Resize:
+            if self.buttonDelete.isVisible():
+                self.buttonDelete.move(self.buttonUpload.width() - 25, (self.buttonUpload.height() - 20) // 2)
+        return super().eventFilter(obj, event)
     
     def set_file_path(self, file_path):
         self.bar_chart.create_chart(file_path)
         self.file_path = file_path
+        self.buttonDelete.setVisible(file_path is not None)
 
+        if file_path:
+            self.buttonUpload.setText(os.path.basename(file_path))
+            self.buttonDelete.move(self.buttonUpload.width() - 25, (self.buttonUpload.height() - 20) // 2)
+        else:
+            self.reset_graph()
 
-    
+    def reset_graph(self):
+        self.file_path = None
+        self.bar_chart.clear()
+        self.buttonDelete.setVisible(False)
+        self.buttonUpload.setText("Upload file here")

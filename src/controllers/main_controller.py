@@ -11,13 +11,7 @@ class MainController:
         self.button.setEnabled(False)
         self.setWindowTitle("Button Clicked!")
 
-    def upload_document(self) -> str:
+    def upload_document(self):
         file_path, _ = QFileDialog.getOpenFileName(None, "Choose file", "", "All Files (*)")
-        if file_path:
-            file_name = os.path.basename(file_path)
-        else:
-            file_name = "Error File"
         self.view.set_file_path(file_path)
-        self.view.update_buttonUpload_text(file_name)
-        return file_name
     

@@ -38,6 +38,22 @@ class StyleManager:
         """
 
     @staticmethod
+    def get_delete_button_style():
+        return """
+        QToolButton {
+            border: none;
+            background: transparent;
+            padding: 2px;
+            color: #ff6b6b;
+            font-weight: bold;
+        }
+        QToolButton:hover {
+            background: rgba(255, 0, 0, 0.5);
+            border-radius: 4px;
+        }
+        """
+
+    @staticmethod
     def get_empty_box_style():
         return """
         background-color: #f0f0f0;

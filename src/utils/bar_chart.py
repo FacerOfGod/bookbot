@@ -1,4 +1,3 @@
-import matplotlib.pyplot as plt
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
 from matplotlib.figure import Figure
 from PySide6.QtWidgets import QWidget, QVBoxLayout
@@ -50,10 +49,11 @@ class BarChart(QWidget):
             The chart will automatically update if this method is called multiple times
             with different file paths.
         """
+        self.ax.clear()
+        if (file_path is None): return 
         _, total_number_words, data = file_path_to_stats(file_path)
         
         # Clear previous plot
-        self.ax.clear()
         
         characters = [item[0] for item in data]
         occurrences = [item[1] for item in data]
@@ -67,7 +67,7 @@ class BarChart(QWidget):
         self.figure.tight_layout()
         self.canvas.draw()
         
-    def show(self):
-        plt.tight_layout()
-        plt.show()
         
+    def clear(self):
+        self.ax.clear()
+        self.canvas.draw()
