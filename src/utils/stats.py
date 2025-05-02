@@ -10,6 +10,9 @@ Functions:
     sorted_dict: Sorts a dictionary by its values in descending order
 """
 
+import chardet
+
+
 def get_book_text(file_path: str) -> str:
     """
     Reads and returns the contents of a text file.
@@ -23,9 +26,14 @@ def get_book_text(file_path: str) -> str:
     Note:
         The file is read using UTF-8 encoding to handle special characters.
     """
-    with open(file_path, 'r', encoding="utf8") as f:
+    with open(file_path, "rb") as f:
+        raw_data = f.read()
+        result = chardet.detect(raw_data)
+        encoding = result["encoding"]
+
+    with open(file_path, "r", encoding=encoding) as f:
         file_contents = f.read()
-        return file_contents
+    return file_contents
 
 def number_of_words(book_text: str) -> int:
     """
