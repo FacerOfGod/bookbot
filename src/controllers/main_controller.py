@@ -9,7 +9,7 @@ output_folder = "ressources/wikipedia"
 class MainController:
 
     def __init__(self, view):
-        self.view = view
+        self.view: MainController = view
 
     def the_button_was_clicked(self):
         user_input = self.view.input_box.text()
@@ -30,4 +30,10 @@ class MainController:
     def upload_document(self):
         file_path, _ = QFileDialog.getOpenFileName(None, "Choose file", "", "All Files (*)")
         self.view.set_file_path(file_path)
+
+    def toggle_button_wiki(self):
+        if self.view.input_box.text():  
+            self.view.button.setEnabled(True) 
+        else:
+            self.view.button.setEnabled(False)
     

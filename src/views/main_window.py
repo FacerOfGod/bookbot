@@ -53,6 +53,8 @@ class MainWindow(QMainWindow):
         self.input_box = QLineEdit()
         self.input_box.setPlaceholderText("Type here...")
         self.input_box.setStyleSheet(StyleManager.get_input_box_style())
+        self.input_box.textChanged.connect(self.controller.toggle_button_wiki)
+
 
 
         # Button to later confirm the fact that we what to analyse the current file
@@ -60,7 +62,7 @@ class MainWindow(QMainWindow):
         self.button.setFont(QFont("Arial", 12, QFont.Bold))
         self.button.setStyleSheet(StyleManager.get_button_style())
         self.button.clicked.connect(self.controller.the_button_was_clicked)
-
+        self.button.setEnabled(False)
 
         h_layout = QHBoxLayout()
         h_layout.addWidget(self.buttonUpload)

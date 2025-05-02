@@ -16,6 +16,11 @@ class StyleManager:
         QPushButton:pressed {
             background-color: #3d8b40;
         }
+
+        QPushButton:disabled {
+            background-color: #d3d3d3;  
+            color: #a9a9a9;             
+        }
         """
 
     @staticmethod
