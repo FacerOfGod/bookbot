@@ -56,7 +56,7 @@ class MainWindow(QMainWindow):
 
 
         # Button to later confirm the fact that we what to analyse the current file
-        self.button = QPushButton("Click Me!")
+        self.button = QPushButton("Wiki search")
         self.button.setFont(QFont("Arial", 12, QFont.Bold))
         self.button.setStyleSheet(StyleManager.get_button_style())
         self.button.clicked.connect(self.controller.the_button_was_clicked)
