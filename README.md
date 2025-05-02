@@ -94,7 +94,10 @@ To fix this, I restructured the project by separating the GUI components, stylin
 Building the GUI was fun... until it came to placing the buttons. Lining things up the way I wanted—especially the Delete button—was trickier than expected. It took way more tweaking than it probably should’ve to get it looking right. Layout managers can be a bit of a headache, but after some trial and error (and maybe a few frustrated sighs), everything ended up more or less where it should be. Still room to improve, but it works!
 
 - #### Support of various documents
-Supporting file types beyond .txt turned out to be more complicated than I expected. Each format has its own quirks—whether it's encoding, hidden characters, or just how the data is structured. I started looking into handling .pdf and .docx, but quickly realized that parsing them properly would need extra libraries and a lot more logic to handle edge cases.
+Supporting file types beyond .txt turned out to be more complicated than I expected. Each format has its own quirks—whether it's encoding, hidden characters, or just how the data is structured. I started looking into handling .pdf and .docx, but quickly realized that parsing them properly would need extra libraries and a lot more logic to handle edge cases. I will come back to this
+
+- #### Testing
+Testing went pretty well. I used **pytest** for some basic unit tests and ran through a few user flows to make sure things like insert a file works, cli works well, and chart updates worked as expected. Most of it held up nicely. Error handling still needs more work, especially with weird or unsupported files, but overall it’s in a good spot for now.
 
 ---
 ## 🚀 3th Project Goals
