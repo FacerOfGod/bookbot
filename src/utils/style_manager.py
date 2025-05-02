@@ -60,3 +60,20 @@ class StyleManager:
         border: 2px solid #333;
         border-radius: 10px;
         """ 
+    
+    @staticmethod
+    def get_input_box_style():
+        return """
+        QLineEdit {
+            padding: 8px 12px;
+            border: 2px solid #2196F3;
+            border-radius: 5px;
+            font-size: 14px;
+            background-color: #ffffff;
+            color: #333;
+        }
+        QLineEdit:focus {
+            border-color: #1976D2;
+            background-color: #f0f8ff;
+        }
+        """

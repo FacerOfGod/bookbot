@@ -49,15 +49,26 @@ class MainWindow(QMainWindow):
         # Connect resize event to update delete button position
         self.buttonUpload.installEventFilter(self)
 
+        # Create input box
+        self.input_box = QLineEdit()
+        self.input_box.setPlaceholderText("Type here...")
+        self.input_box.setStyleSheet(StyleManager.get_input_box_style())
+
+
         # Button to later confirm the fact that we what to analyse the current file
         self.button = QPushButton("Click Me!")
         self.button.setFont(QFont("Arial", 12, QFont.Bold))
         self.button.setStyleSheet(StyleManager.get_button_style())
         self.button.clicked.connect(self.controller.the_button_was_clicked)
 
+
+        h_layout = QHBoxLayout()
+        h_layout.addWidget(self.buttonUpload)
+        h_layout.addWidget(self.input_box)
+        h_layout.addWidget(self.button)
+
         layout.addWidget(self.bar_chart, alignment=Qt.AlignCenter)
-        layout.addWidget(self.buttonUpload, alignment=Qt.AlignCenter)
-        layout.addWidget(self.button, alignment=Qt.AlignCenter)
+        layout.addLayout(h_layout)
 
     def eventFilter(self, obj, event):
         if obj == self.buttonUpload and event.type() == event.Type.Resize:
