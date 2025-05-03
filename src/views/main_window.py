@@ -41,7 +41,7 @@ class MainWindow(QMainWindow):
         self.buttonDelete = QToolButton(self.buttonUpload)
         self.buttonDelete.setIcon(custom_icon)
         self.buttonDelete.setStyleSheet(StyleManager.get_delete_button_style())
-        self.buttonDelete.clicked.connect(self.reset_graph)
+        self.buttonDelete.clicked.connect(self.controller.reset_graph)
         self.buttonDelete.setVisible(False)
         self.buttonDelete.setFixedSize(20, 20)
 
@@ -62,12 +62,20 @@ class MainWindow(QMainWindow):
         self.button.clicked.connect(self.controller.the_button_was_clicked)
         self.button.setEnabled(False)
 
+        self.link_label = QLabel()
+        self.link_label.setOpenExternalLinks(True) 
+        self.link_label.setTextInteractionFlags(Qt.TextBrowserInteraction)
+        self.link_label.setStyleSheet("color: #1E90FF;") 
+        self.link_label.hide()
+
+
         h_layout = QHBoxLayout()
         h_layout.addWidget(self.buttonUpload)
         h_layout.addWidget(self.input_box)
         h_layout.addWidget(self.button)
 
         layout.addWidget(self.bar_chart, alignment=Qt.AlignCenter)
+        layout.addWidget(self.link_label, alignment=Qt.AlignCenter)
         layout.addLayout(h_layout)
 
     def eventFilter(self, obj, event):

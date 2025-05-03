@@ -53,15 +53,20 @@ class BarChart(QWidget):
         if (file_path is None): return 
         _, total_number_words, data = file_path_to_stats(file_path)
         
-        # Clear previous plot
-        
+        if len(data) > 26:
+            n = 26 
+            self.ax.set_xlabel(f'Characters ({len(data) - 26} hidden)')
+        else:
+            self.ax.set_xlabel('Characters')
+            n= len(data)
+        data = data[:n]
+
         characters = [item[0] for item in data]
         occurrences = [item[1] for item in data]
         
         self.ax.bar(characters, occurrences)
-        self.ax.set_xlabel('Characters')
         self.ax.set_ylabel('Occurrences')
-        self.ax.set_title('Character Occurrences')
+        self.ax.set_title(f'Character Occurrences (Number of words {total_number_words})')
         
         # Adjust layout and redraw
         self.figure.tight_layout()
