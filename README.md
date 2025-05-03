@@ -24,7 +24,7 @@ python3 main.py books/mobydick.txt
 **⚠ UPDATED:** due to a few changes caused by the project expansion you must use the key word `cli`
 
 ```bash
-python3 main.py cli books/mobydick.txt
+python3 main.py cli -f books/mobydick.txt
 ```
 Example output:
 
