@@ -1,4 +1,5 @@
 import os
+import sys
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
@@ -7,7 +8,12 @@ from src.controllers.main_controller import MainController
 from src.utils.bar_chart import BarChart
 from src.utils.style_manager import StyleManager
 
-icon_path = os.path.join("src", "images", "bookbot_icon.png")
+def resource_path(relative_path):
+    """ Get absolute path to resource, works for dev and for PyInstaller """
+    base_path = getattr(sys, '_MEIPASS', os.path.abspath("."))
+    return os.path.join(base_path, relative_path)
+
+icon_path = resource_path("src/images/bookbot_logo.png")
 
 class MainWindow(QMainWindow):
 
@@ -79,8 +85,9 @@ class MainWindow(QMainWindow):
         h_layout.addWidget(self.button)
 
         layout.addWidget(self.bar_chart, alignment=Qt.AlignCenter)
-        layout.addWidget(self.link_label, alignment=Qt.AlignCenter)
         layout.addLayout(h_layout)
+        layout.addWidget(self.link_label, alignment=Qt.AlignCenter)
+
 
     def eventFilter(self, obj, event):
         if obj == self.buttonUpload and event.type() == event.Type.Resize:

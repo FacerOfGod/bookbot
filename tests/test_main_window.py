@@ -12,13 +12,13 @@ def main_window(qtbot):
 
 def test_initial_state(main_window):
     """Check initial GUI state."""
-    assert main_window.file_path is None
+    assert main_window.controller.file_path is None
     assert main_window.buttonUpload.text() == "Upload file here"
     assert not main_window.buttonDelete.isVisible()
 
 def test_wiki_button(main_window, ):
     """Check Wiki button state."""
-    assert main_window.file_path is None
+    assert main_window.controller.file_path is None
     assert main_window.button.text() == "Wiki search"
     assert not main_window.button.isEnabled()
     main_window.input_box.setText("Test")
@@ -30,9 +30,9 @@ def test_set_file_path(main_window, tmp_path):
     dummy_file = tmp_path / "dummy.txt"
     dummy_file.write_text("dummy content")
 
-    main_window.set_file_path(str(dummy_file))
+    main_window.controller.file_path = str(dummy_file)
 
-    assert main_window.file_path == str(dummy_file)
+    assert main_window.controller.file_path == str(dummy_file)
     assert main_window.buttonUpload.text() == "dummy.txt"
     assert main_window.buttonDelete.isVisible()
 
@@ -41,11 +41,11 @@ def test_reset_graph(main_window, qtbot, tmp_path):
     dummy_file = tmp_path / "dummy.txt"
     dummy_file.write_text("dummy content")
 
-    main_window.set_file_path(str(dummy_file))
+    main_window.controller.file_path = str(dummy_file)
     assert main_window.buttonDelete.isVisible()
 
     qtbot.mouseClick(main_window.buttonDelete, Qt.LeftButton)
 
-    assert main_window.file_path is None
+    assert main_window.controller.file_path is None
     assert main_window.buttonUpload.text() == "Upload file here"
     assert not main_window.buttonDelete.isVisible()
