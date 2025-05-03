@@ -13,9 +13,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.controller = MainController(self)
         self.bar_chart = BarChart()
-        self.file_path = None
 
-        self.setWindowTitle("Cool Interface")
+        self.setWindowTitle("Bookbot by FacerOfGod")
         self.setMinimumSize(400, 300)
 
         central_widget = QWidget()
@@ -56,7 +55,6 @@ class MainWindow(QMainWindow):
         self.input_box.textChanged.connect(self.controller.toggle_button_wiki)
 
 
-
         # Button to later confirm the fact that we what to analyse the current file
         self.button = QPushButton("Wiki search")
         self.button.setFont(QFont("Arial", 12, QFont.Bold))
@@ -78,19 +76,3 @@ class MainWindow(QMainWindow):
                 self.buttonDelete.move(self.buttonUpload.width() - 25, (self.buttonUpload.height() - 20) // 2)
         return super().eventFilter(obj, event)
     
-    def set_file_path(self, file_path):
-        self.bar_chart.create_chart(file_path)
-        self.file_path = file_path
-        self.buttonDelete.setVisible(file_path is not None)
-
-        if file_path:
-            self.buttonUpload.setText(os.path.basename(file_path))
-            self.buttonDelete.move(self.buttonUpload.width() - 25, (self.buttonUpload.height() - 20) // 2)
-        else:
-            self.reset_graph()
-
-    def reset_graph(self):
-        self.file_path = None
-        self.bar_chart.clear()
-        self.buttonDelete.setVisible(False)
-        self.buttonUpload.setText("Upload file here")
