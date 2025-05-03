@@ -7,6 +7,8 @@ from src.controllers.main_controller import MainController
 from src.utils.bar_chart import BarChart
 from src.utils.style_manager import StyleManager
 
+icon_path = os.path.join("src", "images", "bookbot_icon.png")
+
 class MainWindow(QMainWindow):
 
     def __init__(self):
@@ -15,7 +17,9 @@ class MainWindow(QMainWindow):
         self.bar_chart = BarChart()
 
         self.setWindowTitle("Bookbot by FacerOfGod")
+        self.setWindowIcon(QIcon(icon_path))
         self.setMinimumSize(400, 300)
+
 
         central_widget = QWidget()
         self.setCentralWidget(central_widget)
