@@ -24,7 +24,7 @@ python3 main.py books/mobydick.txt
 **⚠ UPDATED:** due to a few changes caused by the project expansion you must use the key word `cli`
 
 ```bash
-python3 main.py cli books/mobydick.txt
+python3 main.py cli -f books/mobydick.txt
 ```
 Example output:
 
@@ -101,10 +101,37 @@ Testing went pretty well. I used **pytest** for some basic unit tests and ran th
 
 ---
 ## 🚀 3th Project Goals
-- [ ] Allow user to input text throught GUI
-- [ ] Scrap off Wikipedia what the user wants to text
-- [ ] Keep all the previous goals functional
+- [X] Allow user to input text throught GUI
+- [X] Scrap off Wikipedia what the user wants to text
+- [X] Build a `.exe` file to run
+- [X] Keep all the previous goals functional
 
+### How it went:
+
+- #### Scraping
+I thought scraping **Wikipedia** would be a simple task—just fetch the HTML and grab the content. Fetching the URL was easy using **DuckDuckGo**, but actually extracting the text turned out to be trickier. I quickly realized that Wikipedia's structure is more complex than I expected. 
+
+I tried using **BeautifulSoup** for parsing the HTML, which helped a lot in isolating the main content from the sidebars and ads. But, even with that, I ran into issues like stray links or images mixed in with the text. It’s not perfect yet, but it works for now. I’ll need to clean up the output and handle some edge cases, but I’m on the right track!
+
+- #### Building `.exe`
+Building the `.exe` was a bit of a headache. It wasn’t the big stuff, but rather all the little annoying problems—like the icons and logo not showing up, or the window opening behind everything else. These tiny issues took way more time to fix than I expected, but after some trial and error, I got everything working. Still, it’s a process that could’ve gone smoother!
+
+---
+## Quick Demo
+If you want to build the project use the following:
+
+```bash
+pyinstaller Bookbot.spec
+```
+This should build a folder `dist` with the following:
+
+![image](https://github.com/user-attachments/assets/1f402a9e-a7c3-428b-8a38-afb1f6e07b95)
+
+The following GUI should look like this:
+
+<img src="https://github.com/user-attachments/assets/a5ccaf35-1bb3-4636-93af-c89eea71f5c1" width="300" height="300"/>
+<br>
+<img src="https://github.com/user-attachments/assets/edc56fc6-be09-49f1-817f-32cfc8d492b4" width="300" height="300"/>
 
 ---
 ## 🚀 4th Project Goals
