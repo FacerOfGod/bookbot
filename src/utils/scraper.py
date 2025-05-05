@@ -1,20 +1,24 @@
 import requests
 
 from bs4 import BeautifulSoup
-from PySide6.QtWidgets import QMessageBox
 from duckduckgo_search import DDGS
 
 def get_wikipedia_link(query):
     try:
+        print(query)
         results = DDGS().text(query + " site:wikipedia.org", max_results=1)
+        print("here2")
+
         for result in results:
             link = result.get("href", "")
             if "wikipedia.org/wiki" in link:
                 return link
         return None
     except Exception as e:
-            show_error(f"Failed to fetch data: {str(e)}")
-            return None
+        print (e)
+        raise e
+
+          
 
 def scrape_wikipedia_summary(url):
     response = requests.get(url)
@@ -36,13 +40,5 @@ def scrape_wikipedia_summary(url):
 
 def search_and_summarize(query):
     wiki_url = get_wikipedia_link(query)
-    if not wiki_url:
-        return "No Wikipedia page found in search results."
     return scrape_wikipedia_summary(wiki_url), wiki_url
-
-def show_error(message):
-    msg_box = QMessageBox()
-    msg_box.setIcon(QMessageBox.Critical)
-    msg_box.setWindowTitle("Error")
-    msg_box.setText(message)
-    msg_box.exec()
+   

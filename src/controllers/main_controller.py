@@ -1,7 +1,7 @@
 import os
 
 from PySide6.QtWidgets import QFileDialog
-
+from src.utils import error
 from src.utils import scraper
 
 output_folder = "ressources/wikipedia"
@@ -10,28 +10,29 @@ class MainController:
 
     def __init__(self, view):
         self.view: MainController = view
-
         self.file_path = None
         self.website_link = None
 
 
     def the_button_was_clicked(self):
-        user_input = self.view.input_box.text()
-        summary, self.website_link = scraper.search_and_summarize(user_input)
-        self.view.link_label.setText(f'<a href="{self.website_link}"> Click here to open "{user_input}" Wikipedia </a>')
-        self.view.link_label.show()
+        try:
+            user_input = self.view.input_box.text()
+            summary, self.website_link = scraper.search_and_summarize(user_input)
+            self.view.link_label.setText(f'<a href="{self.website_link}"> Click here to open "{user_input}" Wikipedia </a>')
+            self.view.link_label.show()
 
-        if not os.path.exists(output_folder):
-            os.makedirs(output_folder, exist_ok=True)
+            if not os.path.exists(output_folder):
+                os.makedirs(output_folder, exist_ok=True)
 
-        file_path = f"{output_folder}/{user_input}.txt"
+            file_path = f"{output_folder}/{user_input}.txt"
 
-        with open(file_path, "w", encoding="utf-8") as file:
-            file.write(summary)
+            with open(file_path, "w", encoding="utf-8") as file:
+                file.write(summary)
 
-        self.file_path = file_path
-        self.set_graph()
-
+            self.file_path = file_path
+            self.set_graph()
+        except Exception as e :
+            error.show_error(e)
 
 
     def upload_document(self):

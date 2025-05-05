@@ -2,6 +2,8 @@ import sys
 import time
 import argparse
 import os
+import signal
+
 
 from pathlib import Path
 
@@ -47,8 +49,14 @@ def parse_args():
     
     return parser.parse_args()
 
+def handle_sigint(signal_received, frame):
+    print("SIGINT (Ctrl+C) received. Exiting...")
+    QApplication.quit()
+
 
 def main():
+    signal.signal(signal.SIGINT, handle_sigint)
+
     try:
         args = parse_args()
         
@@ -75,9 +83,7 @@ def main():
             time.sleep(2)
 
             window = MainWindow()
-            window.setWindowFlag(Qt.WindowStaysOnTopHint)
-            window.show()
-
+            window.show() 
 
             splash.finish(window)
             sys.exit(app.exec())
