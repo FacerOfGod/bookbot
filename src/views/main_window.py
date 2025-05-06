@@ -1,9 +1,11 @@
 import os
 import sys
+from time import sleep
 
 from PySide6.QtCore import Qt
 from PySide6.QtWidgets import *
 from PySide6.QtGui import QFont, QIcon, QPainter, QColor
+
 from src.controllers.main_controller import MainController
 from src.utils.bar_chart import BarChart
 from src.utils.style_manager import StyleManager
@@ -47,6 +49,9 @@ class MainWindow(QMainWindow):
         painter.end()
         custom_icon = QIcon(pixmap)
 
+        # Status of wiki search
+        self.status_label = QLabel("Status: Idle")
+
         # Delete icon button
         self.buttonDelete = QToolButton(self.buttonUpload)
         self.buttonDelete.setIcon(custom_icon)
@@ -64,14 +69,14 @@ class MainWindow(QMainWindow):
         self.input_box.setStyleSheet(StyleManager.get_input_box_style())
         self.input_box.textChanged.connect(self.controller.toggle_button_wiki)
 
-
         # Button to later confirm the fact that we what to analyse the current file
         self.button = QPushButton("Wiki search")
         self.button.setFont(QFont("Arial", 12, QFont.Bold))
         self.button.setStyleSheet(StyleManager.get_button_style())
-        self.button.clicked.connect(self.controller.the_button_was_clicked)
+        self.button.clicked.connect(self.start_task)
         self.button.setEnabled(False)
 
+        # Provides a clickable link to acces wikipedia page found
         self.link_label = QLabel()
         self.link_label.setOpenExternalLinks(True) 
         self.link_label.setTextInteractionFlags(Qt.TextBrowserInteraction)
@@ -87,6 +92,7 @@ class MainWindow(QMainWindow):
         layout.addWidget(self.bar_chart, alignment=Qt.AlignCenter)
         layout.addLayout(h_layout)
         layout.addWidget(self.link_label, alignment=Qt.AlignCenter)
+        layout.addWidget(self.status_label)
 
 
     def eventFilter(self, obj, event):
@@ -95,3 +101,20 @@ class MainWindow(QMainWindow):
                 self.buttonDelete.move(self.buttonUpload.width() - 25, (self.buttonUpload.height() - 20) // 2)
         return super().eventFilter(obj, event)
     
+    def start_task(self):
+        self.button.setText("Loading...")
+        self.button.setEnabled(False)
+        self.status_label.setText("Status: Working...")
+        QApplication.processEvents() 
+        self.controller.the_button_was_clicked()
+        self.finish_task()
+
+    def finish_task(self):
+        self.button.setText("Wiki search")
+        self.button.setEnabled(True)
+        self.status_label.setText("Status: Done!")
+        QApplication.processEvents()
+        sleep(1) 
+        self.status_label.setText("Status: Idle")
+
+

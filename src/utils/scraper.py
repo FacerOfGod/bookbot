@@ -5,17 +5,13 @@ from duckduckgo_search import DDGS
 
 def get_wikipedia_link(query):
     try:
-        print(query)
         results = DDGS().text(query + " site:wikipedia.org", max_results=1)
-        print("here2")
-
         for result in results:
             link = result.get("href", "")
             if "wikipedia.org/wiki" in link:
                 return link
         return None
     except Exception as e:
-        print (e)
         raise e
 
           
