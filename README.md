@@ -134,7 +134,3 @@ The following GUI should look like this:
 <img src="https://github.com/user-attachments/assets/edc56fc6-be09-49f1-817f-32cfc8d492b4" width="300" height="300"/>
 
 ---
-## 🚀 4th Project Goals
-**⚠ Still figuring this part out...**
-
-This phase hasn’t fully kicked off yet. The plan is probably to create an API or add some sort of backend logic—still thinking it through. Once the core features are solid, I’ll circle back and explore where to go next. Could be a local API, cloud integration, or something totally different. We’ll see!
